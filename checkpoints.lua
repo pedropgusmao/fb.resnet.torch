@@ -30,6 +30,9 @@ function checkpoint.save(epoch, model, optimState, bestModel)
    if torch.type(model) == 'nn.DataParallelTable' then
       model = model:get(1)
    end
+   
+   -- Clear intermediate states. Saves storage.  
+   model:clearState()
 
    local modelFile = 'model_' .. epoch .. '.t7'
    local optimFile = 'optimState_' .. epoch .. '.t7'
